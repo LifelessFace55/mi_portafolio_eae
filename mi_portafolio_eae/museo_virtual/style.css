@@ -1,0 +1,216 @@
+/* Configuración Inicial de la Página */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    background-color: #020202;
+    color: #e6e6e6;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Clases de colores personalizados para los títulos por categoría */
+.text-pink { color: #ff007f; }
+.text-orange { color: #ff9f43; }
+.text-green { color: #294e45; }
+.text-purple { color: #9b5de5; }
+
+/* Estructura común para cada sección */
+.section { 
+    max-width: 1400px; 
+    margin: 0 auto; 
+    padding: 80px 20px; 
+}
+
+.section-title { 
+    font-size: 2.5rem;          
+    font-weight: 700;           
+    text-align: center;         
+    margin-bottom: 50px;        
+    color: #d400ff;             
+    text-transform: uppercase;  
+    letter-spacing: 2px;        
+    
+    /* Línea decorativa inferior ahora centrada */
+    border-bottom: 2px solid #1a1a1a; 
+    padding-bottom: 15px; 
+    max-width: 600px;           
+    margin-left: auto;          
+    margin-right: auto;         
+}
+
+
+/* PORTADA */
+.hero-section { display: flex; justify-content: center; align-items: center; text-align: center; min-height: 85vh; }
+.profile-frame { width: 160px; height: 160px; margin: 0 auto 25px auto; border-radius: 50%; overflow: hidden; border: 3px solid #692a64; box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); }
+.profile-img { width: 100%; height: 100%; object-fit: cover; }
+.hero-section h1 { font-size: 3.8rem; color: #fffcfc; margin-bottom: 5px; }
+.subtitle { font-size: 1.2rem; color: #bf00ff; margin-bottom: 25px; font-weight: 300; }
+.hero-desc { font-size: 1rem; color: #aaa; max-width: 750px; line-height: 1.7; margin: 0 auto; }
+
+/* CONTENEDOR MÁGICO DEL CARRUSEL 3D */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px; /* Crea el volumen y profundidad en la "habitación" */
+    overflow: hidden;
+}
+
+.carousel-3d {
+    position: relative;
+    width: 320px;
+    height: 420px;
+    transform-style: preserve-3d; 
+}
+
+/* Diseño base de todas las tarjetas */
+.card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #301e2c;
+    border: 1px solid #411243;
+    /* Transiciones suaves para cuando cambien de posición */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s, filter 0.6s;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 35px rgba(97, 71, 94, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+}
+
+.card-desc {
+    padding: 15px;
+    background: #1b1a1c;
+    text-align: center;
+    flex-grow: 1;
+}
+.card-desc h3 { font-size: 1.1rem; color: #fff; margin-bottom: 5px;}
+.card-desc p { font-size: 0.85rem; color: #aaa; line-height: 1.4; }
+
+/* REGLAS MATEMÁTICAS 3D EN COORDINADAS X, Y, Z */
+
+/* Tarjeta Central (Frente, encendida) */
+.card.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
+    transform: translate3d(0, 0, 100px);
+    filter: brightness(1);
+    border-color: #ee00ff;
+}
+
+/* Tarjeta de la Izquierda (Atrás y girada a la derecha) */
+.card.prev-shadow {
+    opacity: 0.6;
+    z-index: 5;
+    transform: translate3d(-240px, 0, -100px) rotateY(35deg);
+    filter: brightness(0.4);
+}
+
+/* Tarjeta de la Derecha (Atrás y girada a la izquierda) */
+.card.next-shadow {
+    opacity: 0.6;
+    z-index: 5;
+    transform: translate3d(240px, 0, -100px) rotateY(-35deg);
+    filter: brightness(0.4);
+}
+
+/* Tarjetas sobrantes ocultas totalmente en el fondo */
+.card.far-prev { transform: translate3d(-400px, 0, -300px) rotateY(45deg); opacity: 0; }
+.card.far-next { transform: translate3d(400px, 0, -300px) rotateY(-45deg); opacity: 0; }
+
+/* Flechas de Navegación del Carrusel */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+.nav-btn:hover { background:#d400ff; color: #000; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); }
+.prev { left: 10%; }
+.next { right: 10%; }
+
+/* SECCIÓN 7: EVALUACIÓN */
+.evaluation-section { background-color: #070707; border-top: 1px solid #151515; }
+.evaluation-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; background-color: #111; padding: 40px; border-radius: 15px; border: 1px solid #222; }
+.rating-box { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.stars { display: flex; gap: 12px; margin: 15px 0; }
+.stars i { font-size: 2rem; color: #333; cursor: pointer; transition: all 0.2s; }
+.stars i.active { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+.comment-box { display: flex; flex-direction: column; gap: 15px; }
+textarea { width: 100%; height: 120px; background: #0d0d0d; border: 1px solid #333; border-radius: 8px; padding: 15px; color: #fff; font-family: inherit; resize: none; }
+textarea:focus { outline: none; border-color: #d400ff; }
+.btn-submit { background: #d400ff; color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+.btn-submit:hover { background: #d400ff; transform: translateY(-2px); }
+
+/* Adaptabilidad para Teléfonos Celulares */
+@media (max-width: 768px) {
+    .prev { left: 2%; } .next { right: 2%; }
+    .card.prev-shadow { transform: translate3d(-130px, 0, -150px) rotateY(40deg); }
+    .card.next-shadow { transform: translate3d(130px, 0, -150px) rotateY(-40deg); }
+}
+
+
+   MODIFICACIÓN ESPECÍFICA PARA LA SECCIÓN DE PROGRAMACIÓN
+  
+#programacion .carousel-container {
+    perspective: none;          /* Quitamos la profundidad de habitación */
+    height: auto;               /* Dejamos que se adapte al tamaño de la tarjeta */
+    padding: 40px 0;
+    overflow: visible;          /* Evita que se corte la sombra de la tarjeta */
+}
+
+#programacion .carousel-3d {
+    transform-style: flat;      /* Desactiva el comportamiento 3D */
+    height: auto;               /* Se adapta al contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#programacion .card {
+    position: relative;         
+    opacity: 1;                 
+    pointer-events: auto;       
+    transform: none !important; 
+    z-index: 1;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); /
+   
+#programacion .card img {
+    width: 100%;
+    max-width: 340px;
+    height: 65%;                
+    margin: 0 auto;
+    object-fit: cover;          }
+}
+
+
+#programacion .nav-btn {
+    display: none !important;
+}
